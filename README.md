@@ -33,7 +33,7 @@ Then I installed Node-Red following the [instructions](https://nodered.org/docs/
 
 ### Node-Red
 
-The main idea of the flow is:
+The main idea of the [flow](./node-red-flow.json) is:
 
 - Create an input form with the dashboard library, containing the sender's name, the message, and the SEND button.
 - Validate the message (check for max length, remove accentuated characters) with a custom Javascript node.
@@ -60,11 +60,11 @@ The final web page looked like this (accessible via EC2-INSTACE-PUBLIC-DOMAIN:18
 
 ### Hardware
 
-I connected an ESP32 NodeMCU to an OLED character display. I looked online for a super simple MQTT script in Arduino and made the necessary changes to make it work with the rest of the system.
+I connected an ESP32 NodeMCU to an OLED character display. I looked online for a super simple MQTT Arduino [script](https://randomnerdtutorials.com/esp32-mqtt-publish-subscribe-arduino-ide/) and made the necessary changes to make it work with the rest of the system.
 
 ![LCD_NodeMCU_without_I2C (1)](https://user-images.githubusercontent.com/75386425/148262707-fb5aa917-37ba-4a5a-a1ab-da1c585012b1.png)
 
-The firmware flow is:
+The firmware [flow](./iot-board.ino) is:
 - At boot, the ESP32 inits the display, searches the configured WiFi SSID, and connects to it ( phone's AP). Then it connects to the MQTT broker using the EC2's public domain.
 - Displays a welcome message, indicating to scan the QR code on the board.
 - Once an MQTT message arrives it gets parsed and the sender's name and message get printed in the character display in the correct positions.
