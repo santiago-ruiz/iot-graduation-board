@@ -13,7 +13,7 @@ Looking for boards and parts that I had laying around, I came up with the follow
 
 ![overall](https://user-images.githubusercontent.com/75386425/148261269-b8a7acaf-1f1e-4b1f-b8a3-d8e7809c90c3.png)
 
-I need some kind of server to host a super simple webpage with a form for leaving a message, including the sender name and the message itself. This message will be sent to an ESP32 board via MQTT (thanks to my phone's hotspot) and it will be displayed throw a simple character display.
+I need some kind of server to host a super simple webpage with a form for leaving a message, including the sender's name and the message itself. This message will be sent to an ESP32 board via MQTT (thanks to my phone's hotspot) and it will be displayed throw a simple character display.
 
 The most important thing was to stick with the KISS principle and make everything work in less than 6 hours (since I was also preparing the final presentation for the Uni) for free/cheap.
 
@@ -21,7 +21,7 @@ The most important thing was to stick with the KISS principle and make everythin
 After I came up with this idea I started thinking about how to make it super simple since it was a one-off project. I played before with [Node-Red](https://nodered.org/) and I knew that you could make dashboards very easily, so I started looking for already hosted, ready-to-go solutions but non of the available seemed free ([some](https://fred.sensetecnic.com/) were free but didn't allow dashboards). 
 
 ### AWS
-So I decided to open an [AWS](https://aws.amazon.com/) account, and use an EC2 server. If the account is new, like in my case, you have a one-year free tier for a t2.micro server ( 1vCPU and 1GB, more than enough for this project). I created a new instance running Ubuntu.
+So I decided to open an [AWS](https://aws.amazon.com/) account, and use an EC2 server. If the account is new, like in my case, you have a one-year free tier for a t2.micro server (1vCPU and 1GB, more than enough for this project). I created a new instance running Ubuntu.
 
 ![aws](https://user-images.githubusercontent.com/75386425/148239702-195b6678-064a-4c65-9ffb-bd3edd5d39f1.PNG)
 
@@ -73,7 +73,10 @@ The firmware flow is:
 
 Everything was powered-up by a 3000mAh power bank.
 
-After some tests and fiddling around with the display configuration, I managed to make everything work. I solder the connections and sandwich every to make it as thin as possible, to mount it to the board.
+After some tests and fiddling around with the display configuration, I managed to make everything work. I solder the connections and sandwich everything to make it as thin as possible, to mount it to the board.
+
+![image823](https://user-images.githubusercontent.com/75386425/148302009-2d9c377d-7a76-40e7-9157-5bc7849fb930.png)
+
 
 ## Results
 
