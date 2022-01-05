@@ -5,9 +5,13 @@ When you graduate from an Argentinian university, it's a tradition to throw eggs
 
 ![rsz_1image_1](https://user-images.githubusercontent.com/75386425/148237199-1d2c5350-5cfb-4fdb-b7be-8395bbc1f711.png)
 
-I graduated from the University of Buenos Aires in December 2021 as an Electronic Engineer and I wanted to do something a little more **challenging** than gluing pictures to cardboard. So I came with the idea to add some kind of display so that my friends and family that couldn't come to my graduation could send me some congratulatory messages (or whatever they wanted).
+I graduated from the University of Buenos Aires in December 2021 as an Electronic Engineer and I wanted to do something a little **more challenging** than gluing pictures to cardboard. So I came with the idea to add some kind of display to the board so that my friends and family that couldn't come to my graduation could send me some congratulatory messages (or whatever they wanted) via a Webpage on the Internet. That's where I thought about building an IoT graduation board. 
+
+![steps](https://user-images.githubusercontent.com/75386425/148269807-affdd3e9-012b-4b74-9428-6300ff7a4989.png)
 
 Looking for boards and parts that I had laying around, I came up with the following idea:
+
+![overall](https://user-images.githubusercontent.com/75386425/148261269-b8a7acaf-1f1e-4b1f-b8a3-d8e7809c90c3.png)
 
 I need some kind of server to host a super simple webpage with a form for leaving a message, including the sender name and the message itself. This message will be sent to an ESP32 board via MQTT (thanks to my phone's hotspot) and it will be displayed throw a simple character display.
 
@@ -54,4 +58,29 @@ The final web page looked like this (accessible via EC2-INSTACE-PUBLIC-DOMAIN:18
 
 ![node-red-ui](https://user-images.githubusercontent.com/75386425/148242027-5a046f43-1e06-4713-8ba7-97b77a88afdc.PNG)
 
+### Hardware
 
+I connected an ESP32 NodeMCU to an OLED character display. I looked online for a super simple MQTT script in Arduino and made the necessary changes to make it work with the rest of the system.
+
+![LCD_NodeMCU_without_I2C (1)](https://user-images.githubusercontent.com/75386425/148262707-fb5aa917-37ba-4a5a-a1ab-da1c585012b1.png)
+
+The firmware flow is:
+- At boot, the ESP32 inits the display, searches the configured WiFi SSID, and connects to it ( phone's AP). Then it connects to the MQTT broker using the EC2's public domain.
+- Displays a welcome message, indicating to scan the QR code on the board.
+- Once an MQTT message arrives it gets parsed and the sender's name and message get printed in the character display in the correct positions.
+- Every 5 seconds it sends a keep-alive message.
+- If WiFi or MQTT's broker gets disconnected, reconnect.
+
+Everything was powered-up by a 3000mAh power bank.
+
+After some tests and fiddling around with the display configuration, I managed to make everything work. I solder the connections and sandwich every to make it as thin as possible, to mount it to the board.
+
+## Results
+
+![image823](https://user-images.githubusercontent.com/75386425/148268119-71f06a03-3208-4fa7-ac4a-5e1004761245.png)
+
+The system worked without any problems! Some family members and friends that were at home or present at the moment sent their messages. 
+
+The display looks bigger than the photos and is easy to read.
+
+The board received some splash-damage though, getting a little bit yolked during the celebration :grin:.
