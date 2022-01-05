@@ -14,10 +14,10 @@ I need some kind of server to host a super simple webpage with a form for leavin
 The most important thing was to stick with the KISS principle and make everything work in less than 6 hours (since I was also preparing the final presentation for the Uni) for free/cheap.
 
 ## The build
-After I came up with this idea I started thinking about how to make it super simple since it was a one-off project. I played before with Node-Red and I knew that you could make dashboards very easily, so I started looking for already hosted, ready-to-go solutions but non of the available seemed free (some(https://fred.sensetecnic.com/) were free but didn't allow dashboards). 
+After I came up with this idea I started thinking about how to make it super simple since it was a one-off project. I played before with [Node-Red](https://nodered.org/) and I knew that you could make dashboards very easily, so I started looking for already hosted, ready-to-go solutions but non of the available seemed free ([some](https://fred.sensetecnic.com/) were free but didn't allow dashboards). 
 
 ### AWS
-So I decided to open an AWS account, and use an EC2 server. If the account is new, like in my case, you have a one-year free tier for a t2.micro server ( 1vCPU and 1GB, more than enough for this project). I created a new instance running Ubuntu.
+So I decided to open an [AWS](https://aws.amazon.com/) account, and use an EC2 server. If the account is new, like in my case, you have a one-year free tier for a t2.micro server ( 1vCPU and 1GB, more than enough for this project). I created a new instance running Ubuntu.
 
 ![aws](https://user-images.githubusercontent.com/75386425/148239702-195b6678-064a-4c65-9ffb-bd3edd5d39f1.PNG)
 
@@ -25,7 +25,7 @@ After creating the credentials I was ready to SSH the server.
 
 ![ssh](https://user-images.githubusercontent.com/75386425/148240689-4601054d-c609-4ea1-8b66-c734ad64e703.PNG)
 
-Then I installed Node-Red following the instructions and in a couple of minutes I had all working.
+Then I installed Node-Red following the [instructions](https://nodered.org/docs/getting-started/aws#running-on-aws-ec2-with-ubuntu) and in a couple of minutes I had all working.
 
 ### Node-Red
 
@@ -39,7 +39,7 @@ The main idea of the flow is:
 ![node-red](https://user-images.githubusercontent.com/75386425/148241751-84dc7fbe-c759-4f0e-9fd5-7b9bcc521adc.PNG)
 
 I build this with the available nodes, deploy it and test it with the debug node.
-To make MQTT work, we need a broker. I installed mosquitto, a simple yet powerful MQTT broker that was running in the same EC2 instance. I configured the Node-Red's MQTT node to talk to the broker via localhost port 1883. You have to add Inbound Rules for the EC2 Instance to be able to use ports 1880 (Node-Red ui) and 1883 (MQTT).
+To make MQTT work, we need a broker. I installed [mosquitto](https://mosquitto.org/), a simple yet powerful MQTT broker that was running in the same EC2 instance. I configured the Node-Red's MQTT node to talk to the broker via localhost port 1883. You have to add Inbound Rules for the EC2 Instance to be able to use ports 1880 (Node-Red ui) and 1883 (MQTT).
 
 
 After this, I started testing if everything was working with an MQTT testing app on my phone, reading the corresponding topics.
