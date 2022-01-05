@@ -1,0 +1,351 @@
+[
+    {
+        "id": "84d05636048e5d47",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "dd25e7b13abe1697",
+        "type": "ui_form",
+        "z": "84d05636048e5d47",
+        "name": "",
+        "label": "Dejame tu mensaje",
+        "group": "9ab4f597e79fdc4e",
+        "order": 1,
+        "width": "6",
+        "height": "7",
+        "options": [
+            {
+                "label": "Nombre (max 16 caracteres)",
+                "value": "from",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Mensaje (max 55 caracteres)",
+                "value": "str",
+                "type": "multiline",
+                "required": true,
+                "rows": 2
+            }
+        ],
+        "formValue": {
+            "from": "",
+            "str": ""
+        },
+        "payload": "",
+        "submit": "Enviar",
+        "cancel": "Cancelar",
+        "topic": "topic",
+        "topicType": "msg",
+        "splitLayout": false,
+        "className": "",
+        "x": 280,
+        "y": 180,
+        "wires": [
+            [
+                "049e0133800dc712",
+                "054fd51c8d7d53f6"
+            ]
+        ]
+    },
+    {
+        "id": "25e52308b0c0ebe8",
+        "type": "delay",
+        "z": "84d05636048e5d47",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "15",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 700,
+        "y": 180,
+        "wires": [
+            [
+                "c54e82186ce82c24",
+                "9b7b63a17461d0d6"
+            ]
+        ]
+    },
+    {
+        "id": "939fd66895318a3b",
+        "type": "ui_toast",
+        "z": "84d05636048e5d47",
+        "position": "bottom left",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": false,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": true,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 700,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "049e0133800dc712",
+        "type": "function",
+        "z": "84d05636048e5d47",
+        "name": "Pop-up",
+        "func": "msg.topic = 'Gracias!'\nmsg.className = ''\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 260,
+        "wires": [
+            [
+                "939fd66895318a3b"
+            ]
+        ]
+    },
+    {
+        "id": "c54e82186ce82c24",
+        "type": "mqtt out",
+        "z": "84d05636048e5d47",
+        "name": "",
+        "topic": "cartel/msg",
+        "qos": "2",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b787a7742d4bde0d",
+        "x": 910,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "7ed6bc4d0d0a79db",
+        "type": "status",
+        "z": "84d05636048e5d47",
+        "name": "",
+        "scope": [
+            "25e52308b0c0ebe8"
+        ],
+        "x": 480,
+        "y": 320,
+        "wires": [
+            [
+                "0dc31de676063ae5"
+            ]
+        ]
+    },
+    {
+        "id": "0dc31de676063ae5",
+        "type": "ui_text",
+        "z": "84d05636048e5d47",
+        "group": "9ab4f597e79fdc4e",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "En cola:",
+        "format": "{{msg.status.text}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 720,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "054fd51c8d7d53f6",
+        "type": "function",
+        "z": "84d05636048e5d47",
+        "name": "Validate input",
+        "func": "if(msg.payload.str.length < 55 && msg.payload.from.length < 16){\n    var aux_str = msg.payload.from.normalize(\"NFD\").replace(/[\\u0300-\\u036f]/g, \"\")\n    msg.payload.from = aux_str;\n    aux_str = msg.payload.str.normalize(\"NFD\").replace(/[\\u0300-\\u036f]/g, \"\")\n    msg.payload.str = aux_str;\n    const tmsp = new Date();\n    msg.payload.date_str = tmsp.toLocaleDateString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' });\n    msg.payload.time_str = tmsp.toLocaleTimeString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' });\n    //msg.payload.time_str = tmsp.toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' });\n    //https://en.wikipedia.org/wiki/List_of_tz_database_time_zones\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 180,
+        "wires": [
+            [
+                "25e52308b0c0ebe8"
+            ]
+        ]
+    },
+    {
+        "id": "9b7b63a17461d0d6",
+        "type": "csv",
+        "z": "84d05636048e5d47",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "date_str,time_str, from, str",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 730,
+        "y": 100,
+        "wires": [
+            [
+                "bf2c6d76ef1c4d23"
+            ]
+        ]
+    },
+    {
+        "id": "bf2c6d76ef1c4d23",
+        "type": "file",
+        "z": "84d05636048e5d47",
+        "name": "Save to file",
+        "filename": "/home/ubuntu/Documents/logs.csv",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 910,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c5fecfd1923eee19",
+        "type": "ui_led",
+        "z": "84d05636048e5d47",
+        "order": 2,
+        "group": "9ab4f597e79fdc4e",
+        "width": 0,
+        "height": 0,
+        "label": "Conexión",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 730,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "859d6b3432ea79b6",
+        "type": "mqtt in",
+        "z": "84d05636048e5d47",
+        "name": "",
+        "topic": "cartel/keep_alive",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "b787a7742d4bde0d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 260,
+        "y": 380,
+        "wires": [
+            [
+                "a06b7053b4e02662"
+            ]
+        ]
+    },
+    {
+        "id": "a06b7053b4e02662",
+        "type": "trigger",
+        "z": "84d05636048e5d47",
+        "name": "",
+        "op1": "true",
+        "op2": "false",
+        "op1type": "bool",
+        "op2type": "bool",
+        "duration": "10",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 490,
+        "y": 380,
+        "wires": [
+            [
+                "c5fecfd1923eee19"
+            ]
+        ]
+    },
+    {
+        "id": "9ab4f597e79fdc4e",
+        "type": "ui_group",
+        "name": "Soy ingeniero!",
+        "tab": "284b6b5bacdfd72b",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "b787a7742d4bde0d",
+        "type": "mqtt-broker",
+        "name": "local",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "284b6b5bacdfd72b",
+        "type": "ui_tab",
+        "name": "Cartel",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": true
+    }
+]
